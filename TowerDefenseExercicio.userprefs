@@ -1,16 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\TowerBuilder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\Tile.cs" Line="11" Column="23" />
-      <File FileName="Assets\Resources\Scripts\Grid.cs" Line="43" Column="4" />
-      <File FileName="Assets\Resources\Scripts\Pathfinder.cs" Line="15" Column="59" />
-      <File FileName="Assets\Resources\Scripts\TowerBuilder.cs" Line="57" Column="3" />
-      <File FileName="Assets\Resources\Scripts\Tower.cs" Line="17" Column="77" />
+      <File FileName="Assets\Resources\Scripts\GameManager.cs" Line="54" Column="31" />
+      <File FileName="Assets\Resources\Scripts\Enemy.cs" Line="42" Column="36" />
+      <File FileName="Assets\Resources\Scripts\TowerBuilder.cs" Line="76" Column="29" />
+      <File FileName="Assets\Resources\Scripts\WaveManager.cs" Line="52" Column="52" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Godzilla Filmes\Documents\Unity\TowerDefense\TowerDefenseExercicio\Assets\Resources\Scripts\Grid.cs" line="66" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -7,8 +7,8 @@ public class Grid : MonoBehaviour {
 	Tile[,] tileMatrix;
 
 	void Awake () {
-		tileMatrix = new Tile[10,10];
-		foreach (Tile t in GetComponentsInChildren<Tile>()) {
+		tileMatrix = new Tile[15,15];
+		foreach (Tile t in GetComponentsInChildren<Tile>(true)) {
 			tileMatrix [(int)t.gridPosition.x, (int)t.gridPosition.y] = t;
 			t.SetOccupied (false);
 			t.nextTile = null;
@@ -35,14 +35,14 @@ public class Grid : MonoBehaviour {
 			}
 		}
 
-		if (pos.x + 1 <= 9) {
+		if (pos.x + 1 <= 14) {
 			neighbour = GetTile (new Vector2 (pos.x + 1, pos.y));
 			if (!neighbour.occupied) {
 				neighbours.Add (neighbour);
 			}
 		}
 
-		if (pos.y + 1 <= 9) {
+		if (pos.y + 1 <= 14) {
 			neighbour = GetTile (new Vector2 (pos.x, pos.y + 1));
 			if (!neighbour.occupied) {
 				neighbours.Add (neighbour);

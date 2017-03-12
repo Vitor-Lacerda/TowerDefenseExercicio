@@ -45,12 +45,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\BasicBullet.cs" />
+     <Compile Include="Assets\Resources\Scripts\BulletSpawner.cs" />
+     <Compile Include="Assets\Resources\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Resources\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Resources\Scripts\ExplodingBullet.cs" />
+     <Compile Include="Assets\Resources\Scripts\GameManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Grid.cs" />
      <Compile Include="Assets\Resources\Scripts\GridMaker.cs" />
+     <Compile Include="Assets\Resources\Scripts\LerperEnemy.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinder.cs" />
+     <Compile Include="Assets\Resources\Scripts\Test.cs" />
      <Compile Include="Assets\Resources\Scripts\Tile.cs" />
      <Compile Include="Assets\Resources\Scripts\Tower.cs" />
      <Compile Include="Assets\Resources\Scripts\TowerBuilder.cs" />
+     <Compile Include="Assets\Resources\Scripts\WaveManager.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />

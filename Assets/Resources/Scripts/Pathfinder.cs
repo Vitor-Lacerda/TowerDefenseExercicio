@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Pathfinder : MonoBehaviour {
 
 	public Grid grid;
-	public Vector2 exitPosition = new Vector2(9,5);
+	public Tile exitTile;
 
 	void Start(){
 		FloodFill ();
@@ -20,7 +20,7 @@ public class Pathfinder : MonoBehaviour {
 		//So pra deixar todos "nao visitados"
 		grid.ResetTiles ();
 
-		Tile exitTile = grid.GetTile (exitPosition);
+		//Tile exitTile = grid.GetTile (exitPosition);
 		Queue<Tile> border = new Queue<Tile> ();
 		border.Enqueue (exitTile);
 
