@@ -28,7 +28,7 @@ public class Pathfinder : MonoBehaviour {
 
 		while (border.Count > 0) {
 			Tile visiting = border.Dequeue ();
-			foreach (Tile neighbour in grid.GetNeighbours(visiting)) {
+			foreach (Tile neighbour in grid.GetNeighbours(visiting,false)) {
 				if (neighbour.nextTile == null) {
 					border.Enqueue (neighbour);
 					neighbour.nextTile = visiting;

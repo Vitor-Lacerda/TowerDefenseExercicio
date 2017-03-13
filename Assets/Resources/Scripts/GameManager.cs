@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Init(){
+		//guiManager.Init ();
 		currentGold = startingGold;
 		guiManager.UpdateGoldText (startingGold);
 		currentLives = startingLives;

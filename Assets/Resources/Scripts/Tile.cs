@@ -12,12 +12,15 @@ public class Tile : MonoBehaviour {
 	protected Material[] materials;
 
 
+	public Tower tower;
 	public Tile nextTile;
 
-	public void SetOccupied(bool b){
+	public void SetOccupied(bool b, Tower newTower = null){
+		tower = b ? newTower : null;
 		occupied = b;
 		Renderer renderer = GetComponent<Renderer> ();
 		renderer.material = occupied ? materials [1] : materials [0];
+
 	}
 
 	void Start(){

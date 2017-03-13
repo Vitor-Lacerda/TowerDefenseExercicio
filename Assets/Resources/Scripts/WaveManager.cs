@@ -48,6 +48,7 @@ public class WaveManager : MonoBehaviour {
 
 	public void Reset(){
 		Init ();
+		StopCoroutine ("SpawnWave");
 	}
 
 	void Update(){
@@ -75,6 +76,10 @@ public class WaveManager : MonoBehaviour {
 			lastWaveTime = Time.time;
 		}
 
+		if (GameManager.instance.currentLives <= 0) {
+			StopCoroutine ("SpawnWave");
+
+		}
 
 		if (currentWave == waves.Length - 1) {
 			if (!GameManager.instance.won && enemySpawner.CountLiveEnemies () == 0 && GameManager.instance.currentLives > 0) {

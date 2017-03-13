@@ -10,6 +10,7 @@ public class Tower : MonoBehaviour {
 	public float damage = 2;
 	public float bulletSpeed = 10;
 	public GameObject bulletPrefab;
+	public Transform rotatingElement;
 
 	Transform target;
 	BulletSpawner bulletSpawner;
@@ -33,12 +34,16 @@ public class Tower : MonoBehaviour {
 	
 	void Update () {
 		if (target == null) {
+			rotatingElement.right = Vector3.right;
 			AcquireTarget ();
+					
 		} else {
 			if (Time.time >= fireTimer + fireDelay) {
 				fireTimer = Time.time;
 				bulletSpawner.SpawnBullet (target, transform.position, damage, bulletSpeed, bulletPrefab);
 			}
+			Vector3 direction = rotatingElement.position - target.position;
+			rotatingElement.right = -direction;
 
 			CheckTarget ();
 		}

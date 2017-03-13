@@ -29,7 +29,7 @@ public class BasicBullet : MonoBehaviour {
 		Vector3 direction = target.position - transform.position;
 		direction.Normalize ();
 		transform.position += direction * moveSpeed * Time.deltaTime;
-		transform.LookAt (target);
+		//transform.LookAt (target);
 	}
 
 	protected virtual void OnTriggerEnter(Collider col){

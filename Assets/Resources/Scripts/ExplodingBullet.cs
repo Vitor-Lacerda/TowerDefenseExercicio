@@ -4,6 +4,7 @@ using System.Collections;
 public class ExplodingBullet : BasicBullet {
 
 	public float explosionRadius = 1;
+	public ParticleSystem particle;
 
 
 	protected override void OnTriggerEnter (Collider col)
@@ -21,6 +22,10 @@ public class ExplodingBullet : BasicBullet {
 				ExplosionEffect (enemy);
 			}
 		}
+		particle.transform.parent = transform.parent;
+		particle.transform.position = new Vector3 (transform.position.x, 0.1f, transform.position.z);
+		particle.transform.localScale = Vector3.one;
+		particle.Play ();
 		gameObject.SetActive (false);
 	}
 

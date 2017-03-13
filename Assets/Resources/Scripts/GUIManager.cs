@@ -26,6 +26,10 @@ public class GUIManager : MonoBehaviour {
 
 
 	void Start(){
+		Init ();
+	}
+
+	public void Init(){
 		livesTextStartColor = livesText.color;
 	}
 

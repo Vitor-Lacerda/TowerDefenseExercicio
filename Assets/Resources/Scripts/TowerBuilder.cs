@@ -52,7 +52,7 @@ public class TowerBuilder : MonoBehaviour {
 		Vector2 towerGridPos = new Vector2 (currentTower.transform.position.x, currentTower.transform.position.z);
 		Tile t = grid.GetTile (towerGridPos);
 		if (!t.occupied) {
-			grid.SetOccupied (towerGridPos, true);
+			grid.SetOccupied (towerGridPos, true, currentTower.GetComponent<Tower>());
 			currentTower.GetComponent<Collider> ().enabled = true;
 			currentTower.parent = this.transform;
 			pathfinder.FloodFill ();
@@ -66,7 +66,7 @@ public class TowerBuilder : MonoBehaviour {
 		destroyButton.gameObject.SetActive (true);
 		currentTower = t;
 	}
-
+		
 	public void DestroyTower(){
 		if (currentTower != null) {
 			grid.SetOccupied (new Vector2 (currentTower.transform.position.x, currentTower.transform.position.z), false);
@@ -76,11 +76,31 @@ public class TowerBuilder : MonoBehaviour {
 		destroyButton.gameObject.SetActive (false);
 	}
 
-	void DestroyTower(Transform tower){
+	public void DestroyTower(Transform tower){
 		Transform prevCurrentTower = currentTower;
 		currentTower = tower;
 		DestroyTower ();
 		currentTower = prevCurrentTower;
+	}
+
+	public void DestroyTower(Tile tile){
+		if (!tile.occupied || tile.tower == null) {
+			return;
+		}
+
+		DestroyTower (tile.tower.transform);
+
+		/*
+		foreach (Tower t in GetComponentsInChildren<Tower>()) {
+			Vector2 towerGridPos = new Vector2 (t.transform.position.x, t.transform.position.z);
+			if (towerGridPos == tile.gridPosition) {
+				DestroyTower (t.transform);
+				return;
+			}
+		}
+		*/
+
+
 	}
 
 	public void StartBuilding(GameObject towerPrefab){

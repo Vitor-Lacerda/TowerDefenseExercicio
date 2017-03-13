@@ -19,39 +19,44 @@ public class Grid : MonoBehaviour {
 		return tileMatrix [(int)pos.x,(int)pos.y];
 	}
 
-	public void SetOccupied(Vector2 pos, bool b){
+	public void SetOccupied(Vector2 pos, bool b, Tower tower = null){
 		Tile t = GetTile (pos);
-		t.SetOccupied (b);
+		t.SetOccupied (b, tower);
 	}
 
-	public List<Tile> GetNeighbours(Tile t){
+	public List<Tile> GetNeighbours(Tile t, bool returnOccupied){
 		Vector2 pos = t.gridPosition;
 		List<Tile> neighbours = new List<Tile> ();
 		Tile neighbour;
-		if (pos.x-1 >= 0) {
-			neighbour = GetTile (new Vector2 (pos.x - 1, pos.y));
-			if (!neighbour.occupied) {
-				neighbours.Add (neighbour);
-			}
-		}
+
 
 		if (pos.x + 1 <= 14) {
 			neighbour = GetTile (new Vector2 (pos.x + 1, pos.y));
-			if (!neighbour.occupied) {
+			if ((returnOccupied || !neighbour.occupied) && !neighbour.startOccupied) {
 				neighbours.Add (neighbour);
 			}
 		}
 
+
+		if (pos.x-1 >= 0) {
+			neighbour = GetTile (new Vector2 (pos.x - 1, pos.y));
+			if ((returnOccupied || !neighbour.occupied) && !neighbour.startOccupied) {
+				neighbours.Add (neighbour);
+			}
+		}
+
+
+
 		if (pos.y + 1 <= 14) {
 			neighbour = GetTile (new Vector2 (pos.x, pos.y + 1));
-			if (!neighbour.occupied) {
+			if ((returnOccupied || !neighbour.occupied) && !neighbour.startOccupied) {
 				neighbours.Add (neighbour);
 			}
 		}
 
 		if (pos.y - 1 >= 0) {
 			neighbour = GetTile (new Vector2 (pos.x, pos.y - 1));
-			if (!neighbour.occupied) {
+			if ((returnOccupied || !neighbour.occupied) && !neighbour.startOccupied) {
 				neighbours.Add (neighbour);
 			}
 		}

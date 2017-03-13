@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
@@ -16,9 +17,16 @@ public class Enemy : MonoBehaviour {
 	protected float slowEndTime;
 	protected float moveSpeed;
 
+	protected Grid grid;
+	protected TowerBuilder towerBuilder;
+	protected Animator anim;
+
 
 	void Start(){
 		currentHealth = maxHealth;
+		grid = GameObject.FindObjectOfType<Grid> ();
+		towerBuilder = GameObject.FindObjectOfType<TowerBuilder> (); 
+		anim = GetComponent<Animator> ();
 	}
 
 	public virtual void StartAI(Tile t, Tile _endTile){
@@ -28,23 +36,28 @@ public class Enemy : MonoBehaviour {
 		moveSpeed = startMoveSpeed;
 		endTile = _endTile;
 		UpdateHealthBar ();
+		if (anim == null) {
+			anim = GetComponent<Animator> ();
+		}
+		anim.SetBool ("Dead", false);
 	}
 
 	protected void Update () {
 		if (targetTile != null) {
-			//LerpMove ();
 			Move();
 		} else {
 			targetTile = currentTile.nextTile;
+			if (targetTile == null) {
+				targetTile = OpenPath ();
+			}
 		}
 
 		if (currentTile == endTile) {
 			gameObject.SetActive (false);
-			//Perder vida
 			GameManager.instance.LoseLife();
 		}
 
-		if (Time.time > slowEndTime && moveSpeed != startMoveSpeed) {
+		if (Time.time > slowEndTime && moveSpeed != startMoveSpeed && currentHealth >= 0) {
 			moveSpeed = startMoveSpeed;
 		}
 	}
@@ -60,11 +73,29 @@ public class Enemy : MonoBehaviour {
 		temp += direction * moveSpeed * Time.deltaTime;
 
 		transform.position = temp;
+		transform.forward = direction;
 
 		if (Mathf.Abs (Vector3.Distance (transform.position, tilePos)) <= 0.1f) {
 			currentTile = targetTile;
 			targetTile = targetTile.nextTile;
 		}
+
+	}
+
+	protected Tile OpenPath(){
+		List<Tile> neighbours = grid.GetNeighbours (currentTile,true);
+		Tile newTarget = currentTile;
+		if (neighbours.Count > 0) {
+			foreach (Tile n in neighbours) {
+				if (n.occupied) {
+					towerBuilder.DestroyTower (n);
+					return n;
+				}
+			}
+			newTarget = neighbours [0];
+		}
+
+		return newTarget;
 
 	}
 
@@ -79,14 +110,14 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void Damage(float value){
-		if (value < 0) {
+		if (value < 0 || currentHealth <= 0) {
 			return;
 		}
 
 		currentHealth -= value;
 		UpdateHealthBar ();
 		if (currentHealth <= 0) {
-			Die ();
+			StartCoroutine (Die ());
 		}
 
 	}
@@ -98,9 +129,13 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void Die(){
+	IEnumerator Die(){
 		GameManager.instance.GainGold (goldReward);
+		moveSpeed = 0;
+		anim.SetBool ("Dead", true);
+		yield return new WaitForSeconds (1f);
 		gameObject.SetActive (false);
+		yield return null;
 	}
 
 }
