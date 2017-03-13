@@ -10,9 +10,11 @@ public class BasicBullet : MonoBehaviour {
 
 	protected Transform target;
 
-	public virtual void Initialize(Transform t, float damage, float moveSpeed){
+	public virtual void Initialize(Transform t, float _damage, float _moveSpeed){
 		gameObject.SetActive (true);
 		target = t;
+		damage = _damage;
+		moveSpeed = _moveSpeed;
 	}
 
 	protected virtual void Update(){

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour {
 
@@ -17,11 +18,21 @@ public class EnemySpawner : MonoBehaviour {
 			enemyList.Add (e);
 		}
 	}
+
+	public void Reset(){
+		foreach (Enemy e in enemyList) {
+			e.gameObject.SetActive (false);
+		}
+	}
 		
 	void Update () {
 		if (Input.GetButtonDown ("Jump")) {
 			SpawnEnemy (enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]);
 		}
+	}
+
+	public int CountLiveEnemies(){
+		return enemyList.Where (e => e.gameObject.activeSelf).ToList ().Count;
 	}
 
 	public void SpawnEnemy(GameObject prefab){
@@ -33,6 +44,7 @@ public class EnemySpawner : MonoBehaviour {
 	}
 
 	Enemy FindOrCreateEnemy(GameObject prefab){
+		
 		foreach (Enemy e in enemyList) {
 			if (e.name == prefab.name) {
 				if (e.gameObject.activeSelf == false) {

@@ -1,17 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Enemy.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\GameManager.cs" Line="54" Column="31" />
-      <File FileName="Assets\Resources\Scripts\Enemy.cs" Line="42" Column="36" />
-      <File FileName="Assets\Resources\Scripts\TowerBuilder.cs" Line="76" Column="29" />
-      <File FileName="Assets\Resources\Scripts\WaveManager.cs" Line="52" Column="52" />
+      <File FileName="Assets\Resources\Scripts\FreezeBullet.cs" Line="11" Column="15" />
+      <File FileName="Assets\Resources\Scripts\ExplodingBullet.cs" Line="24" Column="32" />
+      <File FileName="Assets\Resources\Scripts\BashBullet.cs" Line="16" Column="1" />
+      <File FileName="Assets\Resources\Scripts\BasicBullet.cs" Line="28" Column="2" />
+      <File FileName="Assets\Resources\Scripts\LerperEnemy.cs" Line="4" Column="1" />
+      <File FileName="Assets\Resources\Scripts\WaveManager.cs" Line="92" Column="51" />
+      <File FileName="Assets\Resources\Scripts\Enemy.cs" Line="107" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\Godzilla Filmes\Documents\Unity\TowerDefense\TowerDefenseExercicio\Assets\Resources\Scripts\Grid.cs" line="66" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

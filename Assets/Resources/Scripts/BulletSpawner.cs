@@ -15,6 +15,12 @@ public class BulletSpawner : MonoBehaviour {
 			bullets.Add (bb);
 		}
 	}
+
+	public void Reset(){
+		foreach (BasicBullet bb in bullets) {
+			bb.gameObject.SetActive (false);
+		}
+	}
 	
 	public void SpawnBullet(Transform target, Vector3 initialPosition, float bulletDamage, float moveSpeed, GameObject prefab)
 	{

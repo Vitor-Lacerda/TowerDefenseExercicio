@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public float maxHealth = 10;
-	public float moveSpeed = 1;
+	public float startMoveSpeed = 1;
 	public int goldReward;
 
 	public Transform healthBar;
@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour {
 	protected Tile currentTile;
 	protected Tile targetTile;
 	protected Tile endTile;
-
+	protected float slowEndTime;
+	protected float moveSpeed;
 
 
 	void Start(){
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour {
 		currentTile = t;
 		targetTile = currentTile.nextTile;
 		currentHealth = maxHealth;
+		moveSpeed = startMoveSpeed;
 		endTile = _endTile;
 		UpdateHealthBar ();
 	}
@@ -42,6 +44,9 @@ public class Enemy : MonoBehaviour {
 			GameManager.instance.LoseLife();
 		}
 
+		if (Time.time > slowEndTime && moveSpeed != startMoveSpeed) {
+			moveSpeed = startMoveSpeed;
+		}
 	}
 
 
@@ -84,6 +89,13 @@ public class Enemy : MonoBehaviour {
 			Die ();
 		}
 
+	}
+
+	public void Slow(float time){
+		slowEndTime = Time.time + time;
+		if (moveSpeed == startMoveSpeed) {
+			moveSpeed = moveSpeed / 2;
+		}
 	}
 
 	void Die(){

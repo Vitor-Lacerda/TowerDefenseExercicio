@@ -45,11 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\BashBullet.cs" />
      <Compile Include="Assets\Resources\Scripts\BasicBullet.cs" />
      <Compile Include="Assets\Resources\Scripts\BulletSpawner.cs" />
      <Compile Include="Assets\Resources\Scripts\Enemy.cs" />
      <Compile Include="Assets\Resources\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Resources\Scripts\ExplodingBullet.cs" />
+     <Compile Include="Assets\Resources\Scripts\FreezeBullet.cs" />
+     <Compile Include="Assets\Resources\Scripts\GUIManager.cs" />
      <Compile Include="Assets\Resources\Scripts\GameManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Grid.cs" />
      <Compile Include="Assets\Resources\Scripts\GridMaker.cs" />

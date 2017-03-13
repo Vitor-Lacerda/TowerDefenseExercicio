@@ -12,6 +12,12 @@ public class TowerBuilder : MonoBehaviour {
 	Transform currentTower;
 	bool building;
 
+	public void Reset(){
+		foreach (Tower t in GetComponentsInChildren<Tower>()) {
+			DestroyTower (t.transform);
+		}
+		currentTower = null;
+	}
 
 	void Update(){
 		if (building && currentTower != null) {
@@ -48,6 +54,7 @@ public class TowerBuilder : MonoBehaviour {
 		if (!t.occupied) {
 			grid.SetOccupied (towerGridPos, true);
 			currentTower.GetComponent<Collider> ().enabled = true;
+			currentTower.parent = this.transform;
 			pathfinder.FloodFill ();
 			StopBuilding (false);
 		} else {
@@ -67,6 +74,13 @@ public class TowerBuilder : MonoBehaviour {
 			pathfinder.FloodFill ();
 		}
 		destroyButton.gameObject.SetActive (false);
+	}
+
+	void DestroyTower(Transform tower){
+		Transform prevCurrentTower = currentTower;
+		currentTower = tower;
+		DestroyTower ();
+		currentTower = prevCurrentTower;
 	}
 
 	public void StartBuilding(GameObject towerPrefab){
