@@ -11,17 +11,39 @@ public class Tile : MonoBehaviour {
 	[SerializeField]
 	protected Material[] materials;
 
+	Renderer _renderer;
 
 	public Tower tower;
 	public Tile nextTile;
 
+	void Awake(){
+		_renderer = GetComponent<Renderer> ();
+
+	}
+
 	public void SetOccupied(bool b, Tower newTower = null){
 		tower = b ? newTower : null;
 		occupied = b;
-		Renderer renderer = GetComponent<Renderer> ();
-		renderer.material = occupied ? materials [1] : materials [0];
+		if (_renderer == null) {
+			_renderer = GetComponent<Renderer> ();
+
+		}
+		_renderer.material = occupied ? materials [1] : materials [0];
 
 	}
+
+	public void Select(bool b){
+		if (b) {
+			if (_renderer == null) {
+				_renderer = GetComponent<Renderer> ();
+
+			}
+			_renderer.material = materials [2];
+		} else {
+			SetOccupied (occupied);
+		}
+	}
+
 
 	void Start(){
 		SetOccupied (startOccupied);

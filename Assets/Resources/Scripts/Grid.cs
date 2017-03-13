@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Grid : MonoBehaviour {
 
 	Tile[,] tileMatrix;
+	Tile selectedTile;
 
 	void Awake () {
 		tileMatrix = new Tile[15,15];
@@ -13,6 +14,7 @@ public class Grid : MonoBehaviour {
 			t.SetOccupied (false);
 			t.nextTile = null;
 		}
+		selectedTile = null;
 	}
 
 	public Tile GetTile(Vector2 pos){
@@ -22,6 +24,26 @@ public class Grid : MonoBehaviour {
 	public void SetOccupied(Vector2 pos, bool b, Tower tower = null){
 		Tile t = GetTile (pos);
 		t.SetOccupied (b, tower);
+	}
+
+	public void SelectTile(Vector2 pos, bool b){
+		Tile t = GetTile(pos);
+		t.Select(b);
+		selectedTile = t;
+
+	}
+
+	public void Unselect(){
+		if(selectedTile != null){
+			selectedTile.Select (false);
+		}
+		selectedTile = null;
+	}
+
+	public void UnselectAll(){
+		foreach (Tile t in tileMatrix) {
+			t.Select (false);
+		}
 	}
 
 	public List<Tile> GetNeighbours(Tile t, bool returnOccupied){

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 [System.Serializable]
@@ -27,16 +28,18 @@ public class WaveManager : MonoBehaviour {
 	[Header("Attributes")]
 	public float waveInterval = 10;
 	public float firstWaveInterval = 30;
-	public GameObject[] enemyPrefabs;
 	public float enemyInterval = 0.3f;
 
 	float lastWaveTime;
 	bool continuedPlaying;
 	int currentWave;
 
+	GameObject[] enemyPrefabs;
+
 
 	void Start(){
 		Init ();
+		enemyPrefabs = new GameObject[3];
 	}
 
 	void Init(){
@@ -53,24 +56,18 @@ public class WaveManager : MonoBehaviour {
 
 	void Update(){
 		if (Time.time > lastWaveTime + waveInterval) {
-			currentWave++;
-			if (currentWave < waves.Length) {
+			if (currentWave < waves.Length - 1) {
+				currentWave++;
 				StartCoroutine(SpawnWave (waves [currentWave].enemies));
 			} else if(continuedPlaying){
-				//TODO: Gerar aleatorio mais direitinho.
+				WaveElement[] waveEnemies = new WaveElement[enemyPrefabs.Length];
+				for(int i = 0; i<enemyPrefabs.Length;i++){
+					waveEnemies [i].enemyPrefab = enemyPrefabs [Random.Range (0, enemyPrefabs.Length)];
+					waveEnemies [i].amount = currentWave;
+				}
 
-				WaveElement[] waveEnemies;
 
 
-				waveEnemies = new WaveElement[3];
-				waveEnemies [0].enemyPrefab = enemyPrefabs [0];
-				waveEnemies [0].amount = currentWave * 20;
-
-				waveEnemies [1].enemyPrefab = enemyPrefabs [1];
-				waveEnemies [1].amount = currentWave * 15;
-
-				waveEnemies [2].enemyPrefab = enemyPrefabs [2];
-				waveEnemies [2].amount = currentWave * 10;
 				StartCoroutine(SpawnWave (waveEnemies));
 			}
 			lastWaveTime = Time.time;
@@ -102,9 +99,23 @@ public class WaveManager : MonoBehaviour {
 
 	}
 
+	public void SendNextWave(){
+		lastWaveTime = -waveInterval;
+	}
+
 	public void KeepPlaying(){
 		continuedPlaying = true;
 		lastWaveTime = Time.time;
+		//Recupera os prefabs que tem nas waves
+		HashSet<GameObject> hashset = new HashSet<GameObject>();
+		foreach (Wave wave in waves) {
+			foreach (WaveElement we in wave.enemies) {
+				hashset.Add (we.enemyPrefab);
+			}
+		}
+
+		hashset.CopyTo (enemyPrefabs);
+
 	}
 
 

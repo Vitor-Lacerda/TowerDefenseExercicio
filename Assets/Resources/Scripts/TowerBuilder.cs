@@ -14,7 +14,7 @@ public class TowerBuilder : MonoBehaviour {
 
 	public void Reset(){
 		foreach (Tower t in GetComponentsInChildren<Tower>()) {
-			DestroyTower (t.transform);
+			DestroyTower (t.transform,false);
 		}
 		currentTower = null;
 	}
@@ -52,43 +52,55 @@ public class TowerBuilder : MonoBehaviour {
 		Vector2 towerGridPos = new Vector2 (currentTower.transform.position.x, currentTower.transform.position.z);
 		Tile t = grid.GetTile (towerGridPos);
 		if (!t.occupied) {
-			grid.SetOccupied (towerGridPos, true, currentTower.GetComponent<Tower>());
-			currentTower.GetComponent<Collider> ().enabled = true;
-			currentTower.parent = this.transform;
-			pathfinder.FloodFill ();
-			StopBuilding (false);
+			Tower tower = currentTower.GetComponent<Tower> ();
+			if (GameManager.instance.SpendGold (tower.price)) {
+				grid.SetOccupied (towerGridPos, true, tower);
+				currentTower.GetComponent<Collider> ().enabled = true;
+				currentTower.parent = this.transform;
+				pathfinder.FloodFill ();
+				StopBuilding (false);
+			}
 		} else {
 			StopBuilding (true);
 		}
 	}
 
 	public void SelectTower(Transform t){
+		Vector2 towerGridPos = new Vector2 (t.position.x, t.position.z);
+		grid.Unselect();
+		grid.SelectTile (towerGridPos, true);
 		destroyButton.gameObject.SetActive (true);
 		currentTower = t;
 	}
 		
-	public void DestroyTower(){
+	public void DestroyTower(bool sell){
+		Vector2 towerGridPos = new Vector2 (currentTower.transform.position.x, currentTower.transform.position.z);
+
 		if (currentTower != null) {
-			grid.SetOccupied (new Vector2 (currentTower.transform.position.x, currentTower.transform.position.z), false);
+			if (sell) {
+				GameManager.instance.GainGold (Mathf.RoundToInt (currentTower.GetComponent<Tower> ().price / 4));
+			}
+			grid.Unselect ();
+			grid.SetOccupied (towerGridPos, false);
 			Destroy (currentTower.gameObject);
 			pathfinder.FloodFill ();
 		}
 		destroyButton.gameObject.SetActive (false);
 	}
 
-	public void DestroyTower(Transform tower){
+	public void DestroyTower(Transform tower, bool sell = false){
 		Transform prevCurrentTower = currentTower;
 		currentTower = tower;
-		DestroyTower ();
+		DestroyTower (sell);
 		currentTower = prevCurrentTower;
 	}
 
-	public void DestroyTower(Tile tile){
+	public void DestroyTower(Tile tile, bool sell = false){
 		if (!tile.occupied || tile.tower == null) {
 			return;
 		}
 
-		DestroyTower (tile.tower.transform);
+		DestroyTower (tile.tower.transform, sell);
 
 		/*
 		foreach (Tower t in GetComponentsInChildren<Tower>()) {
@@ -107,7 +119,7 @@ public class TowerBuilder : MonoBehaviour {
 
 		Tower t = towerPrefab.GetComponent<Tower> ();
 		if (t != null) {
-			if (GameManager.instance.SpendGold (t.price)) {
+			if (GameManager.instance.CheckGold (t.price)) {
 				GameObject newTower = Instantiate (towerPrefab);
 				currentTower = newTower.transform;
 				currentTower.gameObject.SetActive (false);

@@ -43,6 +43,11 @@ public class Enemy : MonoBehaviour {
 	}
 
 	protected void Update () {
+
+		if (currentHealth <= 0) {
+			return;
+		}
+
 		if (targetTile != null) {
 			Move();
 		} else {
@@ -57,7 +62,7 @@ public class Enemy : MonoBehaviour {
 			GameManager.instance.LoseLife();
 		}
 
-		if (Time.time > slowEndTime && moveSpeed != startMoveSpeed && currentHealth >= 0) {
+		if (Time.time > slowEndTime && moveSpeed != startMoveSpeed) {
 			moveSpeed = startMoveSpeed;
 		}
 	}
@@ -88,7 +93,7 @@ public class Enemy : MonoBehaviour {
 		if (neighbours.Count > 0) {
 			foreach (Tile n in neighbours) {
 				if (n.occupied) {
-					towerBuilder.DestroyTower (n);
+					towerBuilder.DestroyTower (n,false);
 					return n;
 				}
 			}
@@ -117,7 +122,7 @@ public class Enemy : MonoBehaviour {
 		currentHealth -= value;
 		UpdateHealthBar ();
 		if (currentHealth <= 0) {
-			StartCoroutine (Die ());
+			Die ();
 		}
 
 	}
@@ -129,13 +134,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Die(){
+	void Die(){
 		GameManager.instance.GainGold (goldReward);
 		moveSpeed = 0;
 		anim.SetBool ("Dead", true);
-		yield return new WaitForSeconds (1f);
+	}
+
+	public void Disable(){
 		gameObject.SetActive (false);
-		yield return null;
 	}
 
 }

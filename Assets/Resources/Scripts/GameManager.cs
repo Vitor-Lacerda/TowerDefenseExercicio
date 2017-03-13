@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		guiManager.Init ();
 		Init ();
 
 	}
@@ -39,6 +41,10 @@ public class GameManager : MonoBehaviour {
 
 	public void Reset(){
 		Init ();
+	}
+
+	public bool CheckGold(int value){
+		return value <= currentGold;
 	}
 
 	public bool SpendGold(int value){
@@ -78,13 +84,16 @@ public class GameManager : MonoBehaviour {
 		if (won)
 			return;
 		won = true;
-		Time.timeScale = 0;
 		Pause (true);
 		guiManager.Win ();
 	}
 
 	public void Pause(bool b){
 		Time.timeScale = b ? 0 : 1;
+	}
+
+	public void GoToTitle(){
+		SceneManager.LoadScene ("CenaInicial");
 	}
 
 
